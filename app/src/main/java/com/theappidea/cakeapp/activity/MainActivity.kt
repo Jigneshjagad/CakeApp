@@ -97,20 +97,29 @@ class MainActivity : AppCompatActivity() {
 
         //TODO:7 Provide some kind of refresh option that reloads the list
         swipeRefresh.setOnRefreshListener {
-            if (Utils.isOnline(this)) {
-                viewModel.makeApiCall()
-            } else {
-                //TODO:8 Display an error message if the list cannot be loaded
-                Toast.makeText(
-                    applicationContext,
-                    "Check your Internet connection!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            apiCall()
             swipeRefresh.isRefreshing = false
         }
     }
 
-    //TODO:10 Provide an option to retry when an error is presented :- this possible throw snackbar
+    private fun apiCall() {
+        if (Utils.isOnline(this)) {
+            viewModel.makeApiCall()
+        } else {
+            //TODO:8 Display an error message if the list cannot be loaded
+            //TODO:10 Provide an option to retry when an error is presented
+            val snackbar = Snackbar.make(
+                activityMainBinding.mainLayout,
+                "Check your Internet connection!",
+                Snackbar.LENGTH_LONG
+            )
+            snackbar.setAction("Reload") {
+                apiCall()
+            }.show()
+
+        }
+    }
+
+
     //TODO:9 Handle orientation changes, ideally without reloading the list :- condition check for ViewModel factory
 }
