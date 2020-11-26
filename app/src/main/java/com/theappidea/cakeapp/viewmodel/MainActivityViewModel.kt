@@ -28,6 +28,7 @@ class MainActivityViewModel(val mainActivity: Context) : ViewModel() {
 
     init {
         cakeListData = MutableLiveData()
+        //TODO:4 Display image and title for each entry
         cakeAdapter = CakeAdapter(mainActivity)
     }
 
@@ -44,6 +45,7 @@ class MainActivityViewModel(val mainActivity: Context) : ViewModel() {
         return cakeListData
     }
 
+    //TODO:1 When the app is started, load and display a list of cakes with an image
     fun makeApiCall() {
         Log.e("TAG", "makeApiCall: ")
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)

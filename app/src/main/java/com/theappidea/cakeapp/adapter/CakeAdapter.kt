@@ -49,6 +49,7 @@ class CakeAdapter(val mainActivity: Context) : RecyclerView.Adapter<CakeAdapter.
         }
     }
 
+    //TODO:6 Display the cake description in some kind of popup when a cake entry is clicked
     private fun showDialog(desc: String) {
         Log.e("TAG", "showDialog: " + desc)
         val dialog = Dialog(mainActivity)

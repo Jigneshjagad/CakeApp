@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.theappidea.cakeapp.R
@@ -42,15 +45,17 @@ class MainActivity : AppCompatActivity() {
                 swipeRefresh.isRefreshing = false
             }
             if (it != null) {
-                var ds: List<CakeItem> = LinkedHashSet(it).toMutableList()
+                //TODO:2 Remove duplicate entries by cake name
+                //remove same title
+                val ds: List<CakeItem> = LinkedHashSet(it).toMutableList()
                 var list = ds as ArrayList<CakeItem>
+                //TODO:3 Order entries by name
+                //sort acending order
+                list.sortBy { it.title }
                 viewModel.setAdapterData(list)
             } else {
-                Snackbar.make(
-                    activityMainBinding.root,
-                    "Error in fetching data",
-                    Snackbar.LENGTH_LONG
-                )
+                Toast.makeText(applicationContext, "Error in fetching data", Toast.LENGTH_LONG)
+                    .show()
             }
         })
         setUpBinding(viewModel)
@@ -72,19 +77,40 @@ class MainActivity : AppCompatActivity() {
             txtError.visibility = VISIBLE
         }
 
+        val lac = LayoutAnimationController(
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.item_animation_fall_down
+            )
+        )
+        lac.delay = 0.20f
+        lac.order = LayoutAnimationController.ORDER_NORMAL
+
+        //TODO:11 Animate in list items
         rvcake.apply {
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutAnimation = lac
         }
+
+        //TODO:7 Provide some kind of refresh option that reloads the list
         swipeRefresh.setOnRefreshListener {
             if (Utils.isOnline(this)) {
                 viewModel.makeApiCall()
             } else {
-                Toast.makeText(applicationContext, "Check your Internet connection!", Toast.LENGTH_SHORT).show()
+                //TODO:8 Display an error message if the list cannot be loaded
+                Toast.makeText(
+                    applicationContext,
+                    "Check your Internet connection!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             swipeRefresh.isRefreshing = false
         }
     }
 
+    //TODO:10 Provide an option to retry when an error is presented :- this possible throw snackbar
+    //TODO:9 Handle orientation changes, ideally without reloading the list :- condition check for ViewModel factory
 }
