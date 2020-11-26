@@ -16,15 +16,14 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imgCake"
@@ -41,9 +40,10 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_toEndOf="@+id/imgCake"
                     android:text='@{cakeItem.title}'
                     android:textSize="18sp" />
-            </LinearLayout>
+            </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
     </FrameLayout>

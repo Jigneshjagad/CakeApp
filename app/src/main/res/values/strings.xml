@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CakeApp</string>
+    <string name="please_check_turn_on_internet_connection_and_pull_down">Please check turn on internet connection \n and pull down</string>
 </resources>

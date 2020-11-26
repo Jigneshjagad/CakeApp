@@ -1,11 +1,15 @@
 package com.theappidea.cakeapp.viewmodel
 
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
 import android.util.Log
+import android.view.Window
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.theappidea.cakeapp.R
 import com.theappidea.cakeapp.adapter.CakeAdapter
@@ -13,17 +17,18 @@ import com.theappidea.cakeapp.model.Cake
 import com.theappidea.cakeapp.model.CakeItem
 import com.theappidea.cakeapp.retrofit.RetroInstance
 import com.theappidea.cakeapp.retrofit.RetroService
+import com.theappidea.cakeapp.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivityViewModel : ViewModel(), CakeAdapter.OnItemViewClick {
+class MainActivityViewModel(val mainActivity: Context) : ViewModel() {
     lateinit var cakeListData: MutableLiveData<Cake>
     lateinit var cakeAdapter: CakeAdapter
 
     init {
         cakeListData = MutableLiveData()
-        cakeAdapter = CakeAdapter(this)
+        cakeAdapter = CakeAdapter(mainActivity)
     }
 
     fun getAdapter(): CakeAdapter {
@@ -40,6 +45,7 @@ class MainActivityViewModel : ViewModel(), CakeAdapter.OnItemViewClick {
     }
 
     fun makeApiCall() {
+        Log.e("TAG", "makeApiCall: ")
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
         val call = retroInstance.getCakeDataFromApi()
         call.enqueue(object : Callback<Cake> {
@@ -77,7 +83,4 @@ class MainActivityViewModel : ViewModel(), CakeAdapter.OnItemViewClick {
 
     }
 
-    override fun onClick(position: Int) {
-        Log.e("TAG", "onClick: ")
-    }
 }
