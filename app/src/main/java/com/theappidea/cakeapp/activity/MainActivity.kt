@@ -2,7 +2,6 @@ package com.theappidea.cakeapp.activity
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.AnimationUtils
@@ -12,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +24,7 @@ import com.theappidea.cakeapp.utils.Utils
 import com.theappidea.cakeapp.viewmodel.MainActivityViewModel
 import com.theappidea.cakeapp.viewmodel.MainActivityViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
+
         viewModel.getCakeDataObserver().observe(this, Observer {
             progressBar.visibility = GONE
             txtError.visibility = GONE
@@ -120,6 +123,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    //TODO:9 Handle orientation changes, ideally without reloading the list :- condition check for ViewModel factory
 }

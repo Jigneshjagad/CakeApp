@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CakeApp">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize"><!--TODO:9 Handle orientation changes, ideally without reloading the list :- condition check for ViewModel factory-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

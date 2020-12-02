@@ -1,12 +1,8 @@
 package com.theappidea.cakeapp.viewmodel
 
-import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.util.Log
-import android.view.Window
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +13,6 @@ import com.theappidea.cakeapp.model.Cake
 import com.theappidea.cakeapp.model.CakeItem
 import com.theappidea.cakeapp.retrofit.RetroInstance
 import com.theappidea.cakeapp.retrofit.RetroService
-import com.theappidea.cakeapp.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
